@@ -1,6 +1,17 @@
-module.exports = function(api) {
+module.exports = function (api) {
   api.cache(true);
   return {
-    presets: ['babel-preset-expo'],
+    plugins: [
+      [
+        "dotenv-import",
+        {
+          allowUndefined: true,
+          moduleName: "@env",
+          path: ".env",
+          safe: false,
+        },
+      ],
+    ],
+    presets: ["babel-preset-expo"],
   };
 };
