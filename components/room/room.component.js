@@ -1,13 +1,16 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { GiftedChat } from "react-native-gifted-chat";
-import { useQuery } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import { GET_ROOM_DETAILS } from "./room.queries";
+import { ADD_MESSAGE } from "./room.mutations";
 
 export default function Room({ route }) {
   const { roomId } = route.params;
+  const [addMessage] = useMutation(ADD_MESSAGE);
   const { loading, error, data } = useQuery(GET_ROOM_DETAILS, {
     variables: { roomId },
+    pollInterval: 500,
   });
 
   if (loading) return <Text>Loading...</Text>;
@@ -27,6 +30,10 @@ export default function Room({ route }) {
     }));
   };
 
+  const onSend = (messages = []) => {
+    addMessage({ variables: { body: messages[0].text, roomId } });
+  };
+
   return (
     <>
       <View style={styles.header}>
@@ -35,6 +42,7 @@ export default function Room({ route }) {
       </View>
       <GiftedChat
         messages={mapMessages(messages)}
+        onSend={(messages) => onSend(messages)}
         user={{
           _id: user.id,
         }}
