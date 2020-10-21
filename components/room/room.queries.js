@@ -8,6 +8,7 @@ export const GET_ROOM_DETAILS = (roomId) => gql`
       user {
         firstName
         lastName
+        id
       }
       messages {
         id

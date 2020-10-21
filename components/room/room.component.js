@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { GiftedChat } from "react-native-gifted-chat";
 import { useQuery } from "@apollo/client";
 import { GET_ROOM_DETAILS } from "./room.queries";
 
@@ -12,22 +13,32 @@ export default function Room({ route }) {
 
   const { name, messages, user } = data.room;
 
+  const mapMessages = (arr) => {
+    return arr.map((e) => ({
+      _id: e.id,
+      text: e.body,
+      createdAt: e.insertedAt,
+      user: {
+        _id: e.user.id,
+        name: `${e.user.firstName} ${e.user.lastName}`,
+      },
+    }));
+  };
+
   return (
     <>
       <View style={styles.header}>
         <Text style={styles.heading}>{name}</Text>
         <Text>{`Created by: ${user.firstName} ${user.lastName}`}</Text>
       </View>
-      <View>
-        {messages.map((e) => (
-          <View key={e.id} style={styles.message}>
-            <Text>{e.body}</Text>
-            <Text>
-              {e.user.firstName} {e.user.lastName}
-            </Text>
-          </View>
-        ))}
-      </View>
+      <GiftedChat
+        messages={mapMessages(messages)}
+        user={{
+          _id: user.id,
+        }}
+        renderUsernameOnMessage
+        renderAvatar={null}
+      />
     </>
   );
 }
@@ -40,12 +51,5 @@ const styles = StyleSheet.create({
   },
   heading: {
     fontWeight: "bold",
-  },
-  message: {
-    backgroundColor: "#fff",
-    padding: 10,
-    marginBottom: 10,
-    marginLeft: 10,
-    marginRight: "auto",
   },
 });
