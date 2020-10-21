@@ -1,9 +1,9 @@
 import React from "react";
-import { StyleSheet, Text, View, Button } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { useQuery } from "@apollo/client";
-import { GET_ROOMS } from "./rooms.queries";
+import { GET_ROOMS } from "./home.queries";
 
-export default function Rooms({ navigation }) {
+export default function Home({ navigation }) {
   const { loading, error, data } = useQuery(GET_ROOMS);
 
   if (loading) return <Text>Loading...</Text>;

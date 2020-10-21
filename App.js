@@ -7,7 +7,7 @@ import {
   ApolloProvider,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
-import Rooms from "./components/rooms/rooms.component";
+import Home from "./components/home/home.component";
 import Room from "./components/room/room.component";
 import { CHAT_API_KEY, CHAT_URI } from "@env";
 import { NavigationContainer } from "@react-navigation/native";
@@ -42,8 +42,8 @@ export default function App() {
         <Stack.Navigator initialRouteName="Home">
           <Stack.Screen
             name="Home"
-            component={Rooms}
-            options={{ title: "Chatly Rooms" }}
+            component={Home}
+            options={{ title: "Simple Chat App" }}
           />
           <Stack.Screen name="Room" component={Room} />
         </Stack.Navigator>
