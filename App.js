@@ -43,9 +43,18 @@ export default function App() {
           <Stack.Screen
             name="Home"
             component={Home}
-            options={{ title: "Simple Chat App" }}
+            options={{
+              title: "Chatly Rooms",
+              headerTitleStyle: { alignSelf: "center" },
+            }}
           />
-          <Stack.Screen name="Room" component={Room} />
+          <Stack.Screen
+            name="Room"
+            component={Room}
+            options={{
+              title: "",
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
       <StatusBar style="auto" />

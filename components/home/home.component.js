@@ -1,52 +1,38 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Container, Prompt, Room, Footer, FooterItem } from "./home.styles";
 import { useQuery } from "@apollo/client";
 import { GET_ROOMS } from "./home.queries";
 
 export default function Home({ navigation }) {
   const { loading, error, data } = useQuery(GET_ROOMS);
 
-  if (loading) return <Text>Loading...</Text>;
-  if (error) return <Text>Error :(</Text>;
+  if (loading) return <Prompt>Loading...</Prompt>;
+  if (error) return <Prompt>Error :(</Prompt>;
 
   const { rooms, user } = data.usersRooms;
 
   return (
-    <>
-      <View>
-        <Text style={styles.header}>
-          User: {user.firstName} {user.lastName}
-        </Text>
-        {rooms.map((e) => (
-          <Text
-            key={e.id}
-            style={styles.listItem}
-            onPress={() => {
-              navigation.navigate("Room", {
-                roomId: e.id,
-              });
-            }}
-          >
-            {"> "}
-            {e.name}
-          </Text>
-        ))}
-      </View>
-    </>
+    <Container>
+      {rooms.map((e) => (
+        <Room
+          key={e.id}
+          onPress={() => {
+            navigation.navigate("Room", {
+              roomId: e.id,
+            });
+          }}
+        >
+          {e.name}
+        </Room>
+      ))}
+      <Footer>
+        <FooterItem>
+          {user.firstName} {user.lastName}
+        </FooterItem>
+        <FooterItem>
+          {user.email}
+        </FooterItem>
+      </Footer>
+    </Container>
   );
 }
-
-const styles = StyleSheet.create({
-  header: {
-    backgroundColor: "#fff",
-    padding: 10,
-    marginBottom: 10,
-    fontWeight: "bold",
-  },
-  listItem: {
-    backgroundColor: "#fff",
-    fontWeight: "bold",
-    padding: 10,
-    marginBottom: 10,
-  },
-});

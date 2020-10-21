@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Container, Prompt, Header, Heading, Subheading } from "./room.styles";
 import { GiftedChat } from "react-native-gifted-chat";
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_ROOM_DETAILS } from "./room.queries";
@@ -13,8 +13,8 @@ export default function Room({ route }) {
     pollInterval: 500,
   });
 
-  if (loading) return <Text>Loading...</Text>;
-  if (error) return <Text>Error :(</Text>;
+  if (loading) return <Prompt>Loading...</Prompt>;
+  if (error) return <Prompt>Error :(</Prompt>;
 
   const { name, messages, user } = data.room;
 
@@ -35,11 +35,11 @@ export default function Room({ route }) {
   };
 
   return (
-    <>
-      <View style={styles.header}>
-        <Text style={styles.heading}>{name}</Text>
-        <Text>{`Created by: ${user.firstName} ${user.lastName}`}</Text>
-      </View>
+    <Container>
+      <Header>
+        <Heading>{name}</Heading>
+        <Subheading>{`Created by ${user.firstName} ${user.lastName}`}</Subheading>
+      </Header>
       <GiftedChat
         messages={mapMessages(messages)}
         onSend={(messages) => onSend(messages)}
@@ -49,17 +49,6 @@ export default function Room({ route }) {
         renderUsernameOnMessage
         renderAvatar={null}
       />
-    </>
+    </Container>
   );
 }
-
-const styles = StyleSheet.create({
-  header: {
-    backgroundColor: "#fff",
-    padding: 10,
-    marginBottom: 10,
-  },
-  heading: {
-    fontWeight: "bold",
-  },
-});
