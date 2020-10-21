@@ -6,7 +6,9 @@ import { GET_ROOM_DETAILS } from "./room.queries";
 
 export default function Room({ route }) {
   const { roomId } = route.params;
-  const { loading, error, data } = useQuery(GET_ROOM_DETAILS(roomId));
+  const { loading, error, data } = useQuery(GET_ROOM_DETAILS, {
+    variables: { roomId },
+  });
 
   if (loading) return <Text>Loading...</Text>;
   if (error) return <Text>Error :(</Text>;

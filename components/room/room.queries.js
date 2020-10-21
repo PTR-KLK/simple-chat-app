@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
-export const GET_ROOM_DETAILS = (roomId) => gql`
-  query {
-    room(id: "${roomId}") {
+export const GET_ROOM_DETAILS = gql`
+  query Room($roomId: String!){
+    room(id: $roomId) {
       id
       name
       user {
