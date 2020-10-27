@@ -11,15 +11,6 @@ export const Prompt = styled.Text`
     margin: auto 0;
 `;
 
-export const Room = styled.Text`
-    padding: 0 0 10px;
-    margin: 10px 10px 0;
-    font-size: 17px;
-    font-weight: bold;
-    border-bottom-width: 1px;
-    border-bottom-color: #DCDCDC;
-`;
-
 export const Footer = styled.View`
     display: flex;
     flex-direction: row;
